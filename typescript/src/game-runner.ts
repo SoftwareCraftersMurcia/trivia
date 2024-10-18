@@ -8,17 +8,16 @@ export class GameRunner {
         game.add("Sue");
 
         let notAWinner;
-        do {
-
-            game.roll(Math.floor(Math.random() * 6) + 1);
+        Array.from({length: 100}).forEach((_, index) => {
+            game.roll(index % 6 + 1);
         
-            if (Math.floor(Math.random() * 10) == 7) {
+            if (index % 2 == 0) {
             notAWinner = game.wrongAnswer();
             } else {
             notAWinner = game.wasCorrectlyAnswered();
             }
         
-        } while (notAWinner);
+        });
     }
 }
 
