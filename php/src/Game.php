@@ -1,6 +1,8 @@
 <?php
+namespace Kata;
+
 function echoln($string) {
-  echo $string."\n";
+    echo $string."\n";
 }
 
 class Game {

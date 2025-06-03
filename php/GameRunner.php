@@ -1,5 +1,6 @@
 <?php
-include __DIR__.'/Game.php';
+
+use Kata\Game;
 
 $notAWinner;
   $aGame = new Game();
