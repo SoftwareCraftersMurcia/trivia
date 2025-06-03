@@ -6,13 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 final class TriviaTest extends TestCase
 {
-    public static function provideRunner(): iterable
-    {
-        for ($i = 0; $i < 100; $i++) {
-            yield [$i];
-        }
-    }
-
     #[DataProvider('provideRunner')]
     public function test_runner(int $seed): void
     {
@@ -28,5 +21,12 @@ final class TriviaTest extends TestCase
         $expected = file_get_contents($filename);
 
         self::assertSame($expected, $actual);
+    }
+
+    public static function provideRunner(): iterable
+    {
+        for ($i = 0; $i < 10000; $i++) {
+            yield [$i];
+        }
     }
 }
