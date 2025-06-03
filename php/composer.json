@@ -1,0 +1,23 @@
+{
+    "name": "chema/php",
+    "require-dev": {
+        "phpunit/phpunit": "^12.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kata\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KataTest\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Chemaclass",
+            "email": "chemaclass@outlook.es"
+        }
+    ],
+    "require": {}
+}
