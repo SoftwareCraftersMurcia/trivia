@@ -1,271 +1,34 @@
 <?php
 declare(strict_types=1);
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class TriviaTest extends TestCase
 {
-    public function test_runner_1(): void
+    public static function provideRunner(): iterable
     {
-        srand(1);
+        yield [1];
+        yield [2];
+        yield [3];
+        yield [4];
+        yield [5];
+    }
+
+    #[DataProvider('provideRunner')]
+    public function test_runner(int $seed): void
+    {
+        srand($seed);
         ob_start();
         require __DIR__.'/../GameRunner.php';
         $actual = ob_get_clean();
 
-        self::assertSame($this->expectedOutput(), $actual);
-    }
+        $filename = __DIR__."/snapshot/output-$seed.txt";
+        if (!file_exists($filename)) {
+            file_put_contents($filename, $actual);
+        }
+        $expected = file_get_contents($filename);
 
-    public function test_runner_3(): void
-    {
-        srand(3);
-        ob_start();
-        require __DIR__.'/../GameRunner.php';
-        $actual = ob_get_clean();
-
-        self::assertSame($this->expectedOutput2(), $actual);
-    }
-
-    public function expectedOutput(): string
-    {
-        return <<<TXT
-Chet was added
-They are player number 1
-Pat was added
-They are player number 2
-Sue was added
-They are player number 3
-Chet is the current player
-They have rolled a 2
-Chet's new location is 2
-The category is Sports
-Sports Question 0
-Answer was corrent!!!!
-Chet now has 1 Gold Coins.
-Pat is the current player
-They have rolled a 1
-Pat's new location is 1
-The category is Science
-Science Question 0
-Answer was corrent!!!!
-Pat now has 1 Gold Coins.
-Sue is the current player
-They have rolled a 2
-Sue's new location is 2
-The category is Sports
-Sports Question 1
-Answer was corrent!!!!
-Sue now has 1 Gold Coins.
-Chet is the current player
-They have rolled a 6
-Chet's new location is 8
-The category is Pop
-Pop Question 0
-Answer was corrent!!!!
-Chet now has 2 Gold Coins.
-Pat is the current player
-They have rolled a 6
-Pat's new location is 7
-The category is Rock
-Rock Question 0
-Answer was corrent!!!!
-Pat now has 2 Gold Coins.
-Sue is the current player
-They have rolled a 3
-Sue's new location is 5
-The category is Science
-Science Question 1
-Answer was corrent!!!!
-Sue now has 2 Gold Coins.
-Chet is the current player
-They have rolled a 5
-Chet's new location is 1
-The category is Science
-Science Question 2
-Answer was corrent!!!!
-Chet now has 3 Gold Coins.
-Pat is the current player
-They have rolled a 2
-Pat's new location is 9
-The category is Science
-Science Question 3
-Answer was corrent!!!!
-Pat now has 3 Gold Coins.
-Sue is the current player
-They have rolled a 1
-Sue's new location is 6
-The category is Sports
-Sports Question 2
-Answer was corrent!!!!
-Sue now has 3 Gold Coins.
-Chet is the current player
-They have rolled a 3
-Chet's new location is 4
-The category is Pop
-Pop Question 1
-Answer was corrent!!!!
-Chet now has 4 Gold Coins.
-Pat is the current player
-They have rolled a 1
-Pat's new location is 10
-The category is Sports
-Sports Question 3
-Answer was corrent!!!!
-Pat now has 4 Gold Coins.
-Sue is the current player
-They have rolled a 3
-Sue's new location is 9
-The category is Science
-Science Question 4
-Answer was corrent!!!!
-Sue now has 4 Gold Coins.
-Chet is the current player
-They have rolled a 4
-Chet's new location is 8
-The category is Pop
-Pop Question 2
-Answer was corrent!!!!
-Chet now has 5 Gold Coins.
-Pat is the current player
-They have rolled a 5
-Pat's new location is 3
-The category is Rock
-Rock Question 1
-Answer was corrent!!!!
-Pat now has 5 Gold Coins.
-Sue is the current player
-They have rolled a 6
-Sue's new location is 3
-The category is Rock
-Rock Question 2
-Answer was corrent!!!!
-Sue now has 5 Gold Coins.
-Chet is the current player
-They have rolled a 3
-Chet's new location is 11
-The category is Rock
-Rock Question 3
-Answer was corrent!!!!
-Chet now has 6 Gold Coins.
-
-TXT;
-    }
-
-    public function expectedOutput2(): string
-    {
-        return <<<TXT
-Chet was added
-They are player number 1
-Pat was added
-They are player number 2
-Sue was added
-They are player number 3
-Chet is the current player
-They have rolled a 5
-Chet's new location is 5
-The category is Science
-Science Question 0
-Answer was corrent!!!!
-Chet now has 1 Gold Coins.
-Pat is the current player
-They have rolled a 2
-Pat's new location is 2
-The category is Sports
-Sports Question 0
-Question was incorrectly answered
-Pat was sent to the penalty box
-Sue is the current player
-They have rolled a 5
-Sue's new location is 5
-The category is Science
-Science Question 1
-Answer was corrent!!!!
-Sue now has 1 Gold Coins.
-Chet is the current player
-They have rolled a 1
-Chet's new location is 6
-The category is Sports
-Sports Question 1
-Answer was corrent!!!!
-Chet now has 2 Gold Coins.
-Pat is the current player
-They have rolled a 2
-Pat is not getting out of the penalty box
-Sue is the current player
-They have rolled a 5
-Sue's new location is 10
-The category is Sports
-Sports Question 2
-Answer was corrent!!!!
-Sue now has 2 Gold Coins.
-Chet is the current player
-They have rolled a 6
-Chet's new location is 0
-The category is Pop
-Pop Question 0
-Answer was corrent!!!!
-Chet now has 3 Gold Coins.
-Pat is the current player
-They have rolled a 1
-Pat is getting out of the penalty box
-Pat's new location is 3
-The category is Rock
-Rock Question 0
-Answer was correct!!!!
-Pat now has 1 Gold Coins.
-Sue is the current player
-They have rolled a 4
-Sue's new location is 2
-The category is Sports
-Sports Question 3
-Answer was corrent!!!!
-Sue now has 3 Gold Coins.
-Chet is the current player
-They have rolled a 3
-Chet's new location is 3
-The category is Rock
-Rock Question 1
-Answer was corrent!!!!
-Chet now has 4 Gold Coins.
-Pat is the current player
-They have rolled a 1
-Pat is getting out of the penalty box
-Pat's new location is 4
-The category is Pop
-Pop Question 1
-Answer was correct!!!!
-Pat now has 2 Gold Coins.
-Sue is the current player
-They have rolled a 4
-Sue's new location is 6
-The category is Sports
-Sports Question 4
-Answer was corrent!!!!
-Sue now has 4 Gold Coins.
-Chet is the current player
-They have rolled a 1
-Chet's new location is 4
-The category is Pop
-Pop Question 2
-Answer was corrent!!!!
-Chet now has 5 Gold Coins.
-Pat is the current player
-They have rolled a 6
-Pat is not getting out of the penalty box
-Sue is the current player
-They have rolled a 5
-Sue's new location is 11
-The category is Rock
-Rock Question 2
-Answer was corrent!!!!
-Sue now has 5 Gold Coins.
-Chet is the current player
-They have rolled a 1
-Chet's new location is 5
-The category is Science
-Science Question 2
-Answer was corrent!!!!
-Chet now has 6 Gold Coins.
-
-TXT;
+        self::assertSame($expected, $actual);
     }
 }
