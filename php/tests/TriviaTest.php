@@ -8,11 +8,9 @@ final class TriviaTest extends TestCase
 {
     public static function provideRunner(): iterable
     {
-        yield [1];
-        yield [2];
-        yield [3];
-        yield [4];
-        yield [5];
+        for ($i = 0; $i < 100; $i++) {
+            yield [$i];
+        }
     }
 
     #[DataProvider('provideRunner')]

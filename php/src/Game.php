@@ -148,7 +148,7 @@ class Game {
 
 		} else {
 
-			echoln("Answer was corrent!!!!");
+			echoln("Answer was correct!!!!");
 		$this->purses[$this->currentPlayer]++;
 			echoln($this->players[$this->currentPlayer]
 					. " now has "
